@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>    
+    <script src="https://cdn.tailwindcss.com"></script>   
+    
 <body class="bg-[#F6F5F0] text-[#2c2d42]">
     <div class="top-nav px-20 flex justify-between items-center">
         <div class="hamburger py-6">
@@ -16,25 +17,51 @@
         </div>
 
         <div class="logo">
-            <div class="name font-bold text-3xl -translate-y-1">Infotin</div>
+            <div class="name font-bold text-3xl -translate-y-1">
+                <a href="{{url_for('index')}}">Infotin</a>
+            </div>
         </div>
 
-        <div class="flex items-center">
-            <div class="font-semibold text-sm -translate-y-0.5">Sign in</div>
-            <div class="search pl-4 translate-y-0.5"><span class="material-icons">search</span></div>
+        <div class="flex items-center right-nav">
+            <form action="/search" method="post">
+                <input name="query" type="text" placeholder="Search" autocomplete="off" class="bg-[#F6F5F0] focus:outline-none hidden inp-sign border-b pb-[0.6rem]">
+            </form>
+            <div class="search pr-4 translate-y-0.5 hover:cursor-pointer"><span class="material-icons">search</span></div>
+            <div class="signin font-semibold text-sm -translate-y-0.5">Sign in</div>
         </div>
     </div>
 
     <div class="categories flex space-x-8 px-56 justify-center border-b-2 border-[#2c2d42]">
-        <div class="font-bold border-b-2 border-[#2c2d42] py-2">News</div>
-        <div class="font-medium py-2">Sports</div>
-        <div class="font-medium py-2">Entertainment</div>
-        <div class="font-medium py-2">Health</div>
-        <div class="font-medium py-2">Science</div>
-        <div class="font-medium py-2">Technology</div>
-        <div class="font-medium py-2">Business</div>
+        <div class="font-medium py-2" id="News">
+            <a href="{{url_for('index')}}">News</a>
+        </div>
+        <div class="font-medium py-2" id="Sports">
+            <a href="{{url_for('categories',category = 'sports')}}">Sports</a>
+        </div>
+        <div class="font-medium py-2" id="Entertainment">
+            <a href="{{url_for('categories',category = 'entertainment')}}">Entertainment</a>
+        </div>
+        <div class="font-medium py-2" id="Health">
+            <a href="{{url_for('categories',category = 'health')}}">Health</a>
+        </div>
+        <div class="font-medium py-2" id="Science">
+            <a href="{{url_for('categories',category = 'science')}}">Science</a>
+        </div>
+        <div class="font-medium py-2" id="Technology">
+            <a href="{{url_for('categories',category = 'technology')}}">Technology</a>
+        </div>
+        <div class="font-medium py-2" id="Business">
+            <a href="{{url_for('categories',category = 'business')}}">Business</a>
+        </div>
     </div>
-
+    <script>
+        document.getElementsByClassName("search")[0].addEventListener("click",function(){
+            document.getElementsByClassName("search")[0].classList.add("border-b")
+            document.getElementsByClassName("inp-sign")[0].classList.remove("hidden")
+            document.getElementsByClassName("logo")[0].classList.add("translate-x-[5.7rem]")
+        })
+    </script>
     {%block body %}{% endblock %}
+    {% block script %} {% endblock %}
 </body>
 </html>
