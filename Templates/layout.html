@@ -11,9 +11,9 @@
 <body class="bg-[#F6F5F0] text-[#2c2d42]">
     <div class="top-nav px-20 flex justify-between items-center">
         <div class="hamburger py-6">
-            <div class="line h-0.5 w-3 bg-black my-1"></div>
-            <div class="line h-0.5 w-5 bg-black my-1"></div>
-            <div class="line h-0.5 w-3 ml-2 bg-black my-1"></div>
+            <div class="line h-0.5 w-3 bg-[#F6F5F0] my-1"></div>
+            <div class="line h-0.5 w-5 bg-[#F6F5F0] my-1"></div>
+            <div class="line h-0.5 w-3 ml-2 bg-[#F6F5F0] my-1"></div>
         </div>
 
         <div class="logo">
@@ -24,10 +24,19 @@
 
         <div class="flex items-center right-nav">
             <form action="/search" method="post">
-                <input name="query" type="text" placeholder="Search" autocomplete="off" class="bg-[#F6F5F0] focus:outline-none hidden inp-sign border-b pb-[0.6rem]">
+                <input name="query" type="text" placeholder="Search" autofocus autocomplete="off" class="bg-[#F6F5F0] focus:outline-none hidden inp-sign border-b pb-[0.6rem]">
             </form>
             <div class="search pr-4 translate-y-0.5 hover:cursor-pointer"><span class="material-icons">search</span></div>
-            <div class="signin font-semibold text-sm -translate-y-0.5">Sign in</div>
+            {% if session.user_id %}
+            <div class="name font-semibold text-sm -translate-y-0.5">
+                <a href="{{url_for('logout')}}">Logout</a>
+            </div>
+            {% else %}
+            <div class="signin font-semibold text-sm -translate-y-0.5">
+                <a href="{{url_for('login')}}">Sign in</a>
+            </div>
+            {% endif %}
+            
         </div>
     </div>
 
@@ -53,14 +62,36 @@
         <div class="font-medium py-2" id="Business">
             <a href="{{url_for('categories',category = 'business')}}">Business</a>
         </div>
+        {% if session.user_id %}
+        <div class="font-medium py-2" id="Recommended">
+            <a href="{{url_for('recommended')}}">Recommended</a>
+        </div>
+        {% endif %}
     </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+        <div class="alert bg-{{category}}-100 border border-{{category}}-400 text-{{category}}-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{{message}}</span>
+            <span class="close absolute top-0 bottom-0 right-0 px-4 py-3">
+            <svg class="fill-current h-6 w-6 text-{{category}}-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"></path></svg>
+            </span>
+        </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
     <script>
         document.getElementsByClassName("search")[0].addEventListener("click",function(){
             document.getElementsByClassName("search")[0].classList.add("border-b")
             document.getElementsByClassName("inp-sign")[0].classList.remove("hidden")
             document.getElementsByClassName("logo")[0].classList.add("translate-x-[5.7rem]")
         })
+
+        document.getElementsByClassName("close")[0].addEventListener("click",function(){
+            document.getElementsByClassName("alert")[0].classList.add("hidden")
+        })
     </script>
+
     {%block body %}{% endblock %}
     {% block script %} {% endblock %}
 </body>

@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Register
+{% endblock %}
+
+{% block body %}
+<div class="flex items-center justify-center h-[75vh]">
+    <div class="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
+        <form action="/register" method="post">
+            <div class="mb-3">
+                <label for="username" class="form-label inline-block mb-2 text-gray-700">Username</label>
+                <input autocomplete="off" id="username"
+                    class="block w-full px-3 py-2 border border-solid border-gray-200 focus:border-blue-600 focus:outline-none"
+                    autofocus="" name="username" placeholder="Enter Username" type="text">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label inline-block mb-2 text-gray-700">Password</label>
+                <input name="password" id="password"
+                    class="block px-3 py-2 border border-solid border-gray-200 focus:border-blue-600 focus:outline-none"
+                    placeholder="Password" type="password">
+            </div>
+            <div class="mb-3">
+                <label for="confirmation" class="form-label inline-block mb-2 text-gray-700">Password(again)</label>
+                <input name="confirmation" id="confirmation"
+                    class="block px-3 py-2 border border-solid border-gray-200 focus:border-blue-600 focus:outline-none"
+                    placeholder="Password(again)" type="password">
+            </div>
+            <button type="submit" class="bg-blue-800 text-white px-2.5 py-1.5 w-full mt-4">Register</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

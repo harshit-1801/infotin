@@ -9,6 +9,13 @@
         <div class="query text-3xl font-bold absolute z-10" style="font-family:'Times New Roman', Times, serif">{{title}}</div>
         <div class="box bg-[#FEA1C9] h-2.5 absolute translate-y-[1.35rem] z-0"></div>
     </div>
+
+    {% if news|length == 0 %}
+    <div class="flex flex-wrap px-20 py-8">
+        <h1 class="text-3xl">No results found</h1>
+    </div>
+
+    {% else %}
     <div class="articles flex flex-wrap px-16 py-8">
 
         <div class="article">
@@ -48,6 +55,9 @@
         {% endfor %}
 
     </div>
+
+    {% endif %}
+    
     
 
 {% endblock %}

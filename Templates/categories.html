@@ -11,6 +11,22 @@
         let width = document.getElementsByClassName("category")[0].offsetWidth;
         document.getElementsByClassName("box")[0].classList.add("w-["+width+"px]")
     </script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type=text/javascript>
+                $(document).ready(function(){
+                    $('a.link').on('click',function(){
+                        var news = this.getElementsByClassName("title")[0].innerHTML;
+                        $.ajax({
+                        url: "/add",
+                        type: "get",
+                        data: {news: news},
+                        success: function(response) {
+                            var new_html = response.html;
+                        },
+                        });     
+                    });
+                    });
+    </script>
 {% endblock %}
 
 {% block body %}
@@ -21,7 +37,7 @@
 <div class="articles flex flex-wrap px-16 py-8">
 
     <div class="article">
-        <a href="{{news[0]['url']}}" target="_blank" class=" flex px-4 py-3 mb-4">
+        <a href="{{news[0]['url']}}" target="_blank" class="link flex px-4 py-3 mb-4">
             <div class="image">
                 <img src="{{news[0]['urlToImage']}}" alt="">
             </div>
@@ -40,7 +56,7 @@
     
     {% for i in news[1:] %}
         <div class="article flex flex-col w-1/3 px-4 py-3">
-            <a href="{{i['url']}}" target="_blank">
+            <a href="{{i['url']}}" target="_blank" class="link">
                 <div class="image">
                     <img src="{{i['urlToImage']}}" alt="" class="w-[346px] h-[193px]">
                 </div>
